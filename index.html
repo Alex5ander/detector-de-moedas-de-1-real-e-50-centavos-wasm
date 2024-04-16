@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Browser inference demo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: #000;
+        }
+
+        h1,
+        input,
+        label,
+        output {
+            text-align: center;
+            color: #fff;
+            font-family: monospace;
+            display: block;
+            margin: auto;
+        }
+
+        #canvas {
+            inset: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1></h1>
+    <canvas id="canvas"></canvas>
+    <label for="accuary-input">
+        Precisão:
+        <input id="accuary-input" type="range" value="0" min="0" max="1" step="0.01" />
+        <output id="accuary-output">0</output>
+    </label>
+    <canvas id="offcanvas" hidden width="48" height="48"></canvas>
+    <video id="video" hidden controls autoplay></video>
+
+    <script src="edge-impulse-standalone.js"></script>
+    <script src="run-impulse.js"></script>
+    <script>
+        (async () => {
+            var classifier = new EdgeImpulseClassifier();
+            await classifier.init();
+
+            let project = classifier.getProjectInfo();
+            document.querySelector('h1').textContent = project.owner + ' / ' + project.name + ' (version ' + project.deploy_version + ')';
+            let results = [];
+            function detect() {
+                try {
+                    let imageData = offctx.getImageData(0, 0, 48, 48);
+                    let values = [];
+                    for (let ix = 0; ix < imageData.width * imageData.height; ix++) {
+                        values.push(Number((imageData.data[ix * 4] << 16)
+                            | (imageData.data[ix * 4 + 1] << 8)
+                            | (imageData.data[ix * 4 + 2])));
+                    }
+                    let res = classifier.classify(values);
+                    results = res.results;
+                }
+                catch (ex) {
+                    alert('Failed to classify: ' + (ex.message || ex.toString()));
+                }
+            }
+
+            let accuary = 0;
+            /** @type {HTMLCanvasElement} */
+            const canvas = document.getElementById('canvas');
+            /** @type {HTMLCanvasElement} */
+            const offcanvas = document.getElementById('offcanvas');
+            /** @type {HTMLInputElement} */
+            const accuaryInput = document.getElementById('accuary-input');
+            /** @type {HTMLOutputElement} */
+            const accuaryOutput = document.getElementById('accuary-output');
+            accuaryInput.addEventListener('input', () => {
+                accuary = accuaryInput.value;
+                accuaryOutput.value = accuary;
+            })
+            const ctx = canvas.getContext('2d');
+            const offctx = offcanvas.getContext('2d');
+
+            function drawResults(results) {
+                for (let i = 0; i < results.length; i++) {
+                    const { x, y, width, height, label, value } = results[i];
+
+                    if (value <= accuary) {
+                        continue;
+                    }
+
+                    const _x = x / 48 * canvas.width;
+                    const _y = y / 48 * canvas.height;
+                    const _w = width / 48 * canvas.width;
+                    const _h = height / 48 * canvas.height;
+
+                    const color = label == "1 real" ? "green" : "red";
+                    ctx.beginPath();
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 2;
+                    ctx.arc(_x + _w / 2, _y + _h / 2, Math.min(width, height), 0, 2 * Math.PI);
+                    ctx.stroke();
+                    ctx.closePath();
+
+                    const fontSize = 16;
+                    ctx.font = `${fontSize}px monospace`;
+
+                    const text = `${label} ${value}`;
+                    const txt = ctx.measureText(text);
+
+                    ctx.fillStyle = color;
+                    const textWidth = Math.abs(txt.actualBoundingBoxLeft) + Math.abs(txt.actualBoundingBoxRight);
+                    const textHeight = Math.abs(txt.actualBoundingBoxAscent) + Math.abs(txt.actualBoundingBoxDescent);
+                    const rectWidth = textWidth + 16;
+                    const rectHeight = textHeight + 8;
+                    ctx.fillRect(_x + _w / 2 - rectWidth / 2, _y, rectWidth, rectHeight);
+
+                    ctx.fillStyle = "#fff";
+                    ctx.textRendering = "optimizeLegibility";
+                    ctx.fillText(text, _x + _w / 2 - textWidth / 2, _y + textHeight / 2 + rectHeight / 2);
+                }
+            }
+
+            function loop() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                offctx.drawImage(video, 0, 0, 48, 48);
+                detect();
+                drawResults(results);
+                window.requestAnimationFrame(loop);
+            }
+
+            /** @type {HTMLVideoElement} */
+            const video = document.getElementById('video');
+            try {
+                navigator.mediaDevices.getUserMedia({
+                    audio: false,
+                    video: {
+                        aspectRatio: 1,
+                        facingMode: 'environment'
+                    }
+                }).then(mediaStream => {
+                    video.srcObject = mediaStream;
+                    const size = Math.min(window.innerWidth, window.innerHeight);
+                    canvas.width = size;
+                    canvas.height = size;
+                    loop();
+                })
+            } catch (e) {
+                alert(e)
+            }
+        })();
+    </script>
+</body>
+
+</html>

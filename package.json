@@ -1,0 +1,13 @@
+{
+  "name": "detector-de-moedas-de-1-real-e-50-centavos-wasm-v23",
+  "version": "1.0.0",
+  "description": "Detector de moedas de 1 real e 50 centavos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx http-server --ssl -C cert.crt -K key.key"
+  },
+  "keywords": [],
+  "author": "Alexsander Gutierrez Gonlçalves",
+  "license": "ISC"
+}
