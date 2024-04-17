@@ -1,5 +1,7 @@
 # Detector de moedas de 1 real e 50 centavos
 
+![preview](preview.png)
+
 ### Para começar abra o terminal ou o prompt de comando.
 
 ### Clone esse repositório
