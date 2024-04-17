@@ -4,13 +4,13 @@
 
 ### Para começar abra o terminal ou o prompt de comando.
 
-### Clone esse repositório
+### Clone esse repositório.
 
 ```
 git clone https://github.com/Alex5ander/detector-de-moedas-de-1-real-e-50-centavos-wasm.git
 ```
 
-### Entre na pasta do projeto
+### Entre na pasta do projeto.
 
 ```
 cd detector-de-moedas-de-1-real-e-50-centavos-wasm
