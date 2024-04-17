@@ -1,4 +1,4 @@
-# Detector de moedas de 1 real e 50 centavos
+# Detector de moedas de 1 real e 50 centavos utilizando a plataforma [Edge Impulse](https://edgeimpulse.com/).
 
 ![preview](preview.png)
 
