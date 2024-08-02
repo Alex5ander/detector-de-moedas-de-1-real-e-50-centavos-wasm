@@ -8,6 +8,7 @@
     <meta name="author" content="Alexsander Gutierrez Gonçalves">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
     <title>Detector de moedas de 1 real e 50 centavos</title>
     <style>
         * {
@@ -47,6 +48,19 @@
     </label>
     <canvas id="offcanvas" hidden width="48" height="48"></canvas>
     <video id="video" hidden controls autoplay></video>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function (e) {
+                navigator.serviceWorker.register("sw.js").
+                    then((registration) => {
+                        console.log(registration);
+                    }, (err) => {
+                        console.log(err);
+                    });
+            })
+        }
+    </script>
 
     <script src="edge-impulse-standalone.js"></script>
     <script src="run-impulse.js"></script>

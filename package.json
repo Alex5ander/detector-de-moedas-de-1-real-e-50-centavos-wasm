@@ -9,5 +9,8 @@
   },
   "keywords": [],
   "author": "Alexsander Gutierrez Gonlçalves",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "detector-de-moedas-de-1-real-e-50-centavos-wasm-v23": "file:"
+  }
 }
