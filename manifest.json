@@ -5,8 +5,8 @@
   "background_color": "#000",
   "display": "fullscreen",
   "orientation": "portrait",
-  "start_url": "/index.html",
-  "scope": "/",
+  "start_url": "/detector-de-moedas-de-1-real-e-50-centavos-wasm/index.html",
+  "scope": "/detector-de-moedas-de-1-real-e-50-centavos-wasm/",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",
