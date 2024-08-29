@@ -4,20 +4,20 @@ self.addEventListener('install', (e) => {
     (async () => {
       const cache = await caches.open(CACHE_NAME);
       await cache.addAll([
-        "/",
-        "/images/icons/icon-72x72.png",
-        "/images/icons/icon-96x96.png",
-        "/images/icons/icon-128x128.png",
-        "/images/icons/icon-144x144.png",
-        "/images/icons/icon-152x152.png",
-        "/images/icons/icon-192x192.png",
-        "/images/icons/icon-384x384.png",
-        "/images/icons/icon-512x512.png",
-        "/index.html",
-        "/run-impulse.js",
-        "/manifest.json",
-        "/edge-impulse-standalone.wasm",
-        "/edge-impulse-standalone.js"
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/images/icons/icon-72x72.png",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/images/icons/icon-96x96.png",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/images/icons/icon-128x128.png",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/images/icons/icon-144x144.png",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/images/icons/icon-152x152.png",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/images/icons/icon-192x192.png",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/images/icons/icon-384x384.png",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/images/icons/icon-512x512.png",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/index.html",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/run-impulse.js",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/manifest.json",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/edge-impulse-standalone.wasm",
+        "/detector-de-moedas-de-1-real-e-50-centavos-wasm/edge-impulse-standalone.js"
       ]);
     })()
   );
