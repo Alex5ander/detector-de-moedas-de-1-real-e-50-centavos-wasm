@@ -54,7 +54,7 @@
             window.addEventListener("load", async (e) => {
                 const registration = await navigator.serviceWorker.getRegistration();
                 if (!registration) {
-                    await navigator.serviceWorker.register("sw.js", { scope: "/detector-de-moedas-de-1-real-e-50-centavos-wasm" });
+                    await navigator.serviceWorker.register("/detector-de-moedas-de-1-real-e-50-centavos-wasm/sw.js", { scope: "/detector-de-moedas-de-1-real-e-50-centavos-wasm" });
                 }
             })
         }
