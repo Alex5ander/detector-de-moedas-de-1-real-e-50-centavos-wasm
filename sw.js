@@ -12,7 +12,6 @@ self.addEventListener('install', (e) => {
         "/images/icons/icon-144x144.png",
         "/images/icons/icon-152x152.png",
         "/images/icons/icon-192x192.png",
-        "/images/icons/icon-384x384.png",
         "/images/icons/icon-512x512.png",
         "/run-impulse.js",
         "/manifest.json",
@@ -26,8 +25,8 @@ self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(keys
-        .filter(key => key != CACHE_NAME))
-        .map(key => caches.delete(key));
+        .filter(key => key != CACHE_NAME)
+        .map(key => caches.delete(key)));
     })
   );
 });
@@ -35,7 +34,7 @@ self.addEventListener("fetch", (e) => {
   e.respondWith(
     caches.match(e.request).then(cache => {
       return cache || fetch(e.request).then(response => {
-        caches.open(CACHE_NAME).then(cache => {
+        return caches.open(CACHE_NAME).then(cache => {
           cache.put(e.request.url, response.clone());
           return response;
         })
