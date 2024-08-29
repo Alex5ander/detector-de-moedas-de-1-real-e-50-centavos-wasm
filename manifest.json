@@ -3,10 +3,9 @@
   "short_name": "Detector de moedas",
   "theme_color": "#000",
   "background_color": "#000",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
-  "start_url": "/detector-de-moedas-de-1-real-e-50-centavos-wasm/index.html",
-  "scope": "/detector-de-moedas-de-1-real-e-50-centavos-wasm/",
+  "start_url": "index.html",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",
